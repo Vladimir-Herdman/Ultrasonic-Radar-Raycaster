@@ -1,1 +1,6 @@
+# Development platform-specific files
 .DS_STORE
+
+# Tester files
+test.cpp
+test
