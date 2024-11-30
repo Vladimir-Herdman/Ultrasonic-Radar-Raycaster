@@ -1,6 +1,10 @@
 # Development platform-specific files
 .DS_STORE
+.vscode
 
 # Tester files
 test.cpp
+tester.cpp
 test
+tester
+main
