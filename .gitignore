@@ -5,6 +5,10 @@
 # Tester files
 test.cpp
 tester.cpp
+html
+latex
+Doxyfile
+*notes.txt
 
 # compiled binaries
 test
