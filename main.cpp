@@ -1,9 +1,19 @@
+/**
+ * @file main.cpp
+ * @brief Runs all the code, builds radar off data collected from
+ * connected arduino.
+ *
+ * @author Vladimir Herdman
+ * @date 2024-11-29
+ * @version 0.5.0
+ */
 #include <opencv2/opencv.hpp>
 #include <termios.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>
 #include <map>
+#include <deque>
 
 // Global Constants section
 const int width = 240;  // Go out five rings to measure 50 cm and 10 extra as padding
@@ -21,7 +31,20 @@ const double fontScale = 0.5;
 const cv::Point angle_display(5, height-5);
 const cv::Point distance_display(width/2-20, height-5);
 
-// Helper functions used throughout
+std::deque<std::pair<int, int>> line_deque;
+
+/**
+ * @brief Draws lines and text at an angle
+ * 
+ * @details This function takes a frame and a length to draw from a starting
+ * point at an angle, and then does so to the specified frame.
+ * 
+ * @param frame The cv::Mat to draw on
+ * @param start The starting cv::Point the line will begin at
+ * @param angle The degrees from 0-180 to have the line point
+ * @param length The length of the line once drawn
+ * @param color The color of the line
+ */
 void drawLineAtAngle(cv::Mat& frame, cv::Point start, int angle, int length, cv::Scalar color) {
     const double angle_radians = (angle * (M_PI / 180));
 
@@ -37,6 +60,15 @@ void drawLineAtAngle(cv::Mat& frame, cv::Point start, int angle, int length, cv:
     cv::putText(frame, std::to_string(angle), cv::Point(end_x, end_y), fontFace, fontScale, green);
 }
 
+/**
+ * @brief Sets up the initial radar used throughout the code
+ * 
+ * @details Specifically, drawRadar takes a given frame and creates a
+ * pre-built template for how the radar will look, this radar then
+ * updated throughout the arduino data collection process.
+ * 
+ * @param frame The cv::Mat to draw on
+ */
 void drawRadar(cv::Mat& frame){
     // Base frames
     frame = cv::Mat::zeros(size, CV_8UC3);
@@ -64,6 +96,23 @@ void drawRadar(cv::Mat& frame){
     cv::resize(frame, larger_frame, larger_frame.size(), 0, 0, cv::INTER_CUBIC);
     cv::imshow("Larger Radar (upscaled)", larger_frame);
     cv::waitKey(0);
+}
+
+/**
+ * @brief Updates frame with new line and removes old ones.
+ * 
+ * @details This function draws on a frame the new line based off the
+ * degree, and uses the distance to add in a red line for a detected
+ * object.  After an amount of lines, the old ones are faded out. A
+ * copy of the frame is used so as to simplify the drawing process and
+ * start with a blank slate each time.
+ * 
+ * @param frame The cv::Mat to draw on, not a reference
+ * @param degree The angle to draw a line at
+ * @param distanceCM The distance at which something was detected
+ */
+void updateRadar(cv::Mat frame, const int degree, const int distanceCM){
+
 }
 
 int main(){
@@ -124,13 +173,13 @@ int main(){
                 size_t data_delimiter_pos = message.find(':');
 
                 if (data_delimiter_pos != std::string::npos){
-                    int degree = std::stoi(message.substr(0, data_delimiter_pos));
+                    const int degree = std::stoi(message.substr(0, data_delimiter_pos));
                     // Here, we take "float" string data and convert to
                     // int to later simplify mapping and drawing
-                    int distanceCM = std::stoi(message.substr(data_delimiter_pos + 1));
+                    const int distanceCM = std::stoi(message.substr(data_delimiter_pos + 1));
 
-                    // Update radar screen
-
+                    // Update radar screen and deque
+                    updateRadar(radar, degree, distanceCM);
 
                     // store in measurements if small enough
                     if (distanceCM < 50 && distanceCM > 1 && arduino_measurements.count(degree) == 0){
