@@ -5,6 +5,8 @@
 # Tester files
 test.cpp
 tester.cpp
+
+# compiled binaries
 test
 tester
 main
