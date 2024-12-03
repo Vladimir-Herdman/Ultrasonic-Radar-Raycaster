@@ -1,10 +1,9 @@
 OpenCV Radar
 ===============
-
+https://github.com/user-attachments/assets/a57e16fd-a696-45d4-bdd6-3d92191368b7
 
 Creation
 ===============
-
 Overall, if you've ever used pygame with python, that's about the idea
 I went for with this implementation.  I wanted to collect data from an
 outside source and do something to it, so I used an arduino kit with
@@ -42,6 +41,7 @@ arduino Uno
 
 Here's me using the setup and compilation I made as an example:
 
+https://github.com/user-attachments/assets/6fc75a8e-bccb-4995-90b6-b92bfbb6011f
 
 Here's the sensor and servo I used:
 <div align="center">
@@ -51,7 +51,6 @@ Here's the sensor and servo I used:
 
 Applications
 ===============
-
 The Raytracing aspect feels kind of added on, and that's because it is.
 I felt the possibility that with such a collection tool, one could mark
 down the distances collected and later develop a matrix representing 
