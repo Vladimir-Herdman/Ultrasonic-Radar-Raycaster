@@ -1,6 +1,6 @@
 OpenCV Radar
 ===============
-https://github.com/user-attachments/assets/a57e16fd-a696-45d4-bdd6-3d92191368b7
+https://github.com/user-attachments/assets/32ab4745-1f3f-45c8-aa28-8ed5cb76b9ef
 
 Creation
 ===============
@@ -41,7 +41,7 @@ arduino Uno
 
 Here's me using the setup and compilation I made as an example:
 
-https://github.com/user-attachments/assets/6fc75a8e-bccb-4995-90b6-b92bfbb6011f
+https://github.com/user-attachments/assets/edca48d2-28a4-4c4b-b7b4-b31640d5cdd2
 
 Here's the sensor and servo I used:
 <div align="center">
